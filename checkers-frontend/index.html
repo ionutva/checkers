@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html ng-app="checkersApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Checkers Game</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="app.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 36px;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .black-square {
+            background-color: #769656;
+        }
+
+        .white-square {
+            background-color: #eeeed2;
+        }
+
+        .selected {
+            border: 3px solid red !important;
+        }
+    </style>
+</head>
+<body ng-controller="CheckersController">
+    <h2>Checkers Game</h2>
+    <p>{{message}}</p>
+    <button ng-click="resetGame()">Reset Game</button>
+    <table>
+        <tbody>
+            <tr ng-repeat="row in board track by $index">
+                <td ng-repeat="cell in row track by $index"
+                    ng-class="{'black-square': (cell.row + cell.col) % 2 === 1, 
+                              'white-square': (cell.row + cell.col) % 2 === 0,
+                              'selected': selected && selected.row === cell.row && selected.col === cell.col}"
+                    ng-click="selectCell(cell.row, cell.col)">
+                    <span ng-if="cell.owner === 'PLAYER1'" style="color: red;">
+                        {{cell.type === 'KING' ? '♔' : '●'}}
+                    </span>
+                    <span ng-if="cell.owner === 'PLAYER2'" style="color: black;">
+                        {{cell.type === 'KING' ? '♚' : '●'}}
+                    </span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
